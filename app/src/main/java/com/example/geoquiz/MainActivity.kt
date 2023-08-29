@@ -19,9 +19,13 @@ class MainActivity : AppCompatActivity() {
     private val cheatLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
+        //Handle the result
         if (result.resultCode == Activity.RESULT_OK) {
             quizViewModel.isCheater =
-                result.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: false
+                result.data?.getBooleanExtra(EXTRA_ANSWER_SHOWN, false) ?: true
+        }
+        if (quizViewModel.isCheater) {
+            quizViewModel.updateCheatStatus()
         }
     }
 
@@ -63,12 +67,15 @@ class MainActivity : AppCompatActivity() {
     private fun updateQuestion() {
         val questionTextResID = quizViewModel.currentQuestionText
         binding.questionTextView.setText(questionTextResID)
+
     }
 
+
     private fun checkAnswer(userAnswer: Boolean) {
+
         val correctAnswer = quizViewModel.currentQuestionAnswer
         val messageResId = when {
-            quizViewModel.isCheater -> R.string.judgment_toast
+            quizViewModel.currentQuestionStatus -> R.string.judgment_toast
             userAnswer == correctAnswer -> R.string.correct_toast
             else -> R.string.incorrect_toast
         }
