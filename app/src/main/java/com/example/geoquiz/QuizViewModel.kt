@@ -39,8 +39,8 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
         get() = questionBank[currentIndex].cheated
 
     fun updateCheatStatus() {
-            questionBank[currentIndex] = questionBank[currentIndex].copy(cheated = true)
-            isCheater = questionBank[currentIndex].cheated
+        questionBank[currentIndex] = questionBank[currentIndex].copy(cheated = true)
+        isCheater = questionBank[currentIndex].cheated
     }
 
     fun moveToNext() {
@@ -50,15 +50,8 @@ class QuizViewModel(private val savedStateHandle: SavedStateHandle) : ViewModel(
     fun moveToPrevious() {
         if (currentIndex > 0) {
             currentIndex--
-        }
-        else {
+        } else {
             currentIndex = questionBank.lastIndex
-        }
-    }
-
-    companion object {
-        fun updateCheatStatus() {
-            TODO("Not yet implemented")
         }
     }
 }
